@@ -2,9 +2,11 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 import lime.math.Vector2;
+import weapons.Bullet;
 
 class Player extends FlxSprite
 {
@@ -15,13 +17,18 @@ class Player extends FlxSprite
 		super(x, y);
 		loadGraphic(AssetPaths.entities__png, true, 16, 16);
 		drag.x = drag.y = 2000;
+		solid = true;
 
 		animation.add("walk", [0], 6, true);
+		animation.play("walk");
+
+		origin.set(8.5, 10.5);
 	}
 
 	override function update(elapsed:Float)
 	{
 		updateMovement();
+		shoot();
 		super.update(elapsed);
 	}
 
@@ -70,5 +77,15 @@ class Player extends FlxSprite
 		var position:FlxPoint = getMidpoint().subtract(mousePosition.x, mousePosition.y);
 
 		angle = Math.atan2(position.y, position.x) * 180 / Math.PI - 90;
+	}
+
+	function shoot()
+	{
+		if (FlxG.mouse.justPressed)
+		{
+			var bullet_pos = getMidpoint().add(0, -10).rotate(getMidpoint(), angle);
+
+			Bullet.createNew(bullet_pos.x, bullet_pos.y, 700, angle);
+		}
 	}
 }
