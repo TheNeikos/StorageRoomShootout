@@ -1,0 +1,28 @@
+name: "Build & Publish"
+
+on:
+  release:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: supo apt-get update
+      - uses: lix-pm/setup-lix@master
+      - uses: actions/checkout@v2
+      - run: haxelib install flixel
+      - run: haxelib install ldtk-haxe-api
+      - run: haxelib install deepnightLibs
+      - uses: HaxeFlixel/setup-flixel@master
+        with:
+          haxe-version: "4.2.3"
+          flixel-versions: prod
+          target: html5
+          run-tests: false
+      - run: lime build html5
+      - uses: crazy-max/ghaction-github-pages@v2
+        with:
+          target_branch: gh-pages
+          build_dir: "export/html5/bin/"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
