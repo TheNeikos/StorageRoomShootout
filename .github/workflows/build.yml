@@ -12,9 +12,12 @@ jobs:
       - run: sudo apt-get update
       - uses: lix-pm/setup-lix@master
       - uses: actions/checkout@v2
-      - run: haxelib install flixel
-      - run: haxelib install ldtk-haxe-api
-      - run: haxelib install deepnightLibs
+      - run: haxelib install lime --quiet
+      - run: haxelib install openfl --quiet
+      - run: haxelib install flixel --quiet
+      - run: haxelib install ldtk-haxe-api --quiet
+      - run: haxelib install deepnightLibs --quiet
+      - run: haxelib setup lime --quiet
       - uses: HaxeFlixel/setup-flixel@master
         with:
           haxe-version: "4.2.3"
