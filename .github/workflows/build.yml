@@ -2,6 +2,8 @@ name: "Build & Publish"
 
 on:
   release:
+  workflow_dispatch:
+    
 
 jobs:
   build:
