@@ -17,7 +17,7 @@ jobs:
       - run: haxelib install flixel --quiet
       - run: haxelib install ldtk-haxe-api --quiet
       - run: haxelib install deepnightLibs --quiet
-      - run: haxelib setup lime --quiet
+      - run: haxelib run setup lime --quiet
       - uses: HaxeFlixel/setup-flixel@master
         with:
           haxe-version: "4.2.3"
