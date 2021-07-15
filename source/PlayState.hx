@@ -17,7 +17,7 @@ class PlayState extends FlxState
 {
 	var player:Player;
 	var levels:LevelProject;
-	var mapCollision:FlxGroup;
+	var mapCollision:FlxTilemap;
 	var obstacleCollision:FlxTypedGroup<Crate>;
 	var enemySpawners:FlxTypedGroup<EnemySpawner>;
 	var enemies:FlxTypedGroup<Zombie>;
@@ -58,10 +58,13 @@ class PlayState extends FlxState
 		obstacleCollision = new FlxTypedGroup();
 		add(obstacleCollision);
 
+		var gridWidth = 16;
+		var gridHeight = 16;
+
 		for (crate in current_level.l_Entities.all_Crate)
 		{
-			var crateEntity = new Crate(crate.cx * current_level.l_Entities.cWid, crate.cy * current_level.l_Entities.cHei);
-			// add(crateEntity);
+			trace("Crate", crate.cx, crate.cy, gridWidth, gridHeight);
+			var crateEntity = new Crate(crate.cx * gridWidth, crate.cy * gridHeight);
 			obstacleCollision.add(crateEntity);
 		}
 
@@ -72,15 +75,15 @@ class PlayState extends FlxState
 
 		for (enemySpawn in current_level.l_Entities.all_Enemy_Spawn)
 		{
-			var spawnerEntity = new EnemySpawner(enemySpawn.cx * current_level.l_Entities.cWid, enemySpawn.cy * current_level.l_Entities.cHei,
-				enemySpawn.f_Direction, enemies);
+			var spawnerEntity = new EnemySpawner(enemySpawn.cx * gridWidth, enemySpawn.cy * gridHeight, enemySpawn.f_Direction, enemies,
+				enemySpawn.f_SpawnCount);
 			enemySpawners.add(spawnerEntity);
 		}
 
 		for (l_player in current_level.l_Entities.all_Player)
 		{
-			player.x = l_player.cx * current_level.l_Entities.cWid;
-			player.y = l_player.cy * current_level.l_Entities.cHei;
+			player.x = l_player.cx * gridWidth;
+			player.y = l_player.cy * gridHeight;
 		}
 	}
 
@@ -107,6 +110,9 @@ class PlayState extends FlxState
 		FlxG.collide(Bullet.BULLETS, mapCollision, bulletHit);
 		FlxG.collide(Bullet.BULLETS, obstacleCollision, bulletHit);
 
+		// Bullets hit enemies
+		FlxG.collide(Bullet.BULLETS, enemies, bulletHitEnemy);
+
 		FlxG.collide(Bullet.BULLET_SPARKLES, mapCollision);
 		FlxG.collide(Bullet.BULLET_SPARKLES, obstacleCollision);
 	}
@@ -116,9 +122,15 @@ class PlayState extends FlxState
 		bullet.kill();
 	}
 
+	function bulletHitEnemy(bullet:Bullet, enemy:Zombie)
+	{
+		enemy.hurt(bullet.get_damage());
+		bullet.kill();
+	}
+
 	function checkEnemyVision(enemy:Zombie)
 	{
-		if (true)
+		if (mapCollision.ray(enemy.getMidpoint(), player.getMidpoint()))
 		{
 			enemy.seesPlayer = true;
 			enemy.playerPosition = player.getMidpoint();

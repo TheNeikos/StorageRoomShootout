@@ -17,7 +17,9 @@ class Bullet extends FlxSprite
 	public static var BULLETS:FlxTypedGroup<Bullet> = new FlxTypedGroup();
 	public static var BULLET_SPARKLES:FlxTypedGroup<FlxEmitter> = new FlxTypedGroup();
 
-	public static function createNew(x:Float, y:Float, speed:Float, angle:Float):Bullet
+	var damage(get, default):Float;
+
+	public static function createNew(x:Float, y:Float, speed:Float, angle:Float, dmg:Float):Bullet
 	{
 		var bullet:Bullet = BULLETS.recycle(Bullet, function()
 		{
@@ -27,6 +29,7 @@ class Bullet extends FlxSprite
 		bullet.x = x;
 		bullet.y = y;
 		bullet.angle = angle;
+		bullet.damage = dmg;
 
 		var direction = new FlxVector(0, -speed);
 		direction.rotateByDegrees(angle);
@@ -80,5 +83,10 @@ class Bullet extends FlxSprite
 		// emitter.start();
 
 		super.kill();
+	}
+
+	public function get_damage():Float
+	{
+		return damage;
 	}
 }

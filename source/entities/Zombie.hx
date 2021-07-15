@@ -2,8 +2,10 @@ package entities;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.math.FlxVelocity;
+import js.lib.Math;
 
 class Zombie extends FlxSprite
 {
@@ -23,14 +25,8 @@ class Zombie extends FlxSprite
 		loadGraphic(AssetPaths.entities__png, true, 16, 16);
 		var animStart = 16;
 		animation.add("walk", [
-			animStart,
-			animStart + 1,
-			animStart + 2,
-			animStart + 3,
-			animStart + 4,
-			animStart + 5,
-			animStart + 6,
-			animStart + 7
+			for (i in 0...8)
+				animStart + i
 		], 12, true);
 		solid = true;
 		animation.play("walk");
@@ -38,11 +34,14 @@ class Zombie extends FlxSprite
 		brain = new FSM(idle);
 		idleTimer = 0;
 		playerPosition = FlxPoint.get();
-		speed = 140;
+		speed = 40;
+		health = 20;
 	}
 
 	override function update(elapsed:Float)
 	{
+		angle = Math.atan2(velocity.y, velocity.x) * 180 / Math.PI + 90;
+
 		brain.update(elapsed);
 		super.update(elapsed);
 	}
@@ -52,6 +51,7 @@ class Zombie extends FlxSprite
 		super.reset(X, Y);
 		brain.activeState = idle;
 		idleTimer = 0;
+		health = 20;
 	}
 
 	function idle(elapsed:Float)

@@ -85,7 +85,7 @@ class Player extends FlxSprite
 		{
 			var bullet_pos = getMidpoint().add(0, -10).rotate(getMidpoint(), angle);
 
-			Bullet.createNew(bullet_pos.x, bullet_pos.y, 700, angle);
+			Bullet.createNew(bullet_pos.x, bullet_pos.y, 700, angle, 10);
 		}
 	}
 }

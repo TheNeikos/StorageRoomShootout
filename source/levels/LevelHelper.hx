@@ -4,32 +4,40 @@ import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup;
 import flixel.group.FlxSpriteGroup;
+import flixel.tile.FlxBaseTilemap.FlxTilemapAutoTiling;
+import flixel.tile.FlxTilemap;
+import ldtk.Layer_AutoLayer.AutoTile;
 import ldtk.Layer_IntGrid;
 
 class LevelHelper
 {
-	public static function createColliderFromIntGrid(grid:Layer_IntGrid, collisionValue:Int):FlxGroup
+	public static function createColliderFromIntGrid(grid:Layer_IntGrid, collisionValue:Int):FlxTilemap
 	{
-		var group = new FlxGroup();
+		var tileMap = new FlxTilemap();
+		var data = [];
 
-		for (x in 0...grid.cWid)
-			for (y in 0...grid.cHei)
+		for (y in 0...grid.cHei)
+		{
+			var line = [];
+			for (x in 0...grid.cWid)
 			{
 				var tile = grid.getInt(x, y);
 
 				if (tile != collisionValue)
-					continue;
-
-				var rect = new FlxObject();
-				rect.x = x * grid.gridSize;
-				rect.y = y * grid.gridSize;
-				rect.width = grid.gridSize;
-				rect.height = grid.gridSize;
-				rect.solid = true;
-				rect.immovable = true;
-
-				group.add(rect);
+				{
+					line.push(0);
+				}
+				else
+				{
+					line.push(collisionValue);
+				}
 			}
-		return group;
+			data.push(line);
+		}
+
+		tileMap.loadMapFrom2DArray(data, AssetPaths.tiles__png, 16, 16, FlxTilemapAutoTiling.OFF);
+		tileMap.visible = false;
+
+		return tileMap;
 	}
 }
