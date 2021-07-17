@@ -49,7 +49,7 @@ abstract class Weapon
 		}
 	}
 
-	function createBullet(origin:FlxPoint, angle:Float, count:Int):Bullet
+	function createBullet(origin:FlxPoint, angle:Float, num:Int):Bullet
 	{
 		return Bullet.createNew(origin.x, origin.y, speed, angle, damage);
 	}

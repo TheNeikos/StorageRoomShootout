@@ -29,9 +29,7 @@ class Bullet extends FlxSprite
 		{
 			return new Bullet(x, y);
 		});
-		bullet.revive();
-		bullet.x = x;
-		bullet.y = y;
+		bullet.reset(x, y);
 		bullet.angle = angle;
 		bullet.damage = dmg;
 		bullet.onDamage.removeAll();
@@ -79,8 +77,8 @@ class Bullet extends FlxSprite
 		// emitter.launchAngle = new FlxBounds();
 		emitter.angle.start = new FlxBounds(180 + angle - 30 - 5, 180 + angle - 30 + 5);
 		emitter.angle.end = new FlxBounds(180 + angle + 30 - 5, 180 + angle + 30 + 5);
-		emitter.lifespan.min = 0.15;
-		emitter.lifespan.max = 0.2;
+		emitter.lifespan.min = 0.05;
+		emitter.lifespan.max = 0.1;
 		emitter.speed.start = new FlxBounds(250.0, 300);
 		emitter.speed.end = new FlxBounds(300.0, 560);
 		emitter.color.set(FlxColor.fromInt(0xFFCCCC00), null, FlxColor.fromInt(0xFFFFFF00), null);

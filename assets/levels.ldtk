@@ -852,7 +852,11 @@
 			{ "id": "Crate", "tileId": null, "color": 9136908, "__tileSrcRect": null },
 			{ "id": "Ground", "tileId": null, "color": 9868950, "__tileSrcRect": null }
 		], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null },
-		{ "identifier": "WeaponTypes", "uid": 28, "values": [ { "id": "Pistol", "tileId": 33, "color": 15653123, "__tileSrcRect": [16,32,16,16] }, { "id": "Shotgun", "tileId": 100, "color": 6777708, "__tileSrcRect": [64,96,16,16] } ], "iconTilesetUid": 1, "externalRelPath": null, "externalFileChecksum": null },
+		{ "identifier": "WeaponTypes", "uid": 28, "values": [
+			{ "id": "Pistol", "tileId": null, "color": 15653123, "__tileSrcRect": null },
+			{ "id": "Shotgun", "tileId": null, "color": 6777708, "__tileSrcRect": null },
+			{ "id": "AK47", "tileId": null, "color": 4726026, "__tileSrcRect": null }
+		], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null },
 		{ "identifier": "Direction", "uid": 43, "values": [
 			{ "id": "Up", "tileId": null, "color": 0, "__tileSrcRect": null },
 			{ "id": "Down", "tileId": null, "color": 0, "__tileSrcRect": null },
@@ -1263,7 +1267,16 @@
 							"height": 16,
 							"defUid": 25,
 							"px": [408,264],
-							"fieldInstances": [{ "__identifier": "WeaponDrops", "__value": [], "__type": "Array<LocalEnum.WeaponTypes>", "defUid": 31, "realEditorValues": [] }]
+							"fieldInstances": [{
+								"__identifier": "WeaponDrops",
+								"__value": ["AK47"],
+								"__type": "Array<LocalEnum.WeaponTypes>",
+								"defUid": 31,
+								"realEditorValues": [{
+									"id": "V_String",
+									"params": ["AK47"]
+								}]
+							}]
 						}
 					]
 				},

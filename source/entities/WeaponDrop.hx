@@ -18,6 +18,8 @@ class WeaponDrop extends FlxSprite
 		});
 		area.reset(x, y);
 		area.weapon = weapon;
+		area.loadGraphicFromSprite(weapon.icon);
+		area.frame = weapon.icon.frame;
 
 		return area;
 	}
