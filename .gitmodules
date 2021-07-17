@@ -1,0 +1,4 @@
+[submodule "export/html5/bin"]
+	path = export/html5/bin
+	url = https://github.com/TheNeikos/StorageRoomShootout.git
+	branch = gh-pages
