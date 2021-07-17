@@ -9,7 +9,7 @@
 		"url": "https://ldtk.io"
 	},
 	"jsonVersion": "0.9.3",
-	"nextUid": 53,
+	"nextUid": 58,
 	"worldLayout": "Free",
 	"worldGridWidth": 256,
 	"worldGridHeight": 256,
@@ -721,7 +721,7 @@
 					"canBeNull": false,
 					"arrayMinLength": null,
 					"arrayMaxLength": null,
-					"editorDisplayMode": "Hidden",
+					"editorDisplayMode": "ValueOnly",
 					"editorDisplayPos": "Above",
 					"editorAlwaysShow": false,
 					"editorCutLongValues": true,
@@ -804,16 +804,36 @@
 					"textLanguageMode": null
 				},
 				{
-					"identifier": "SpawnCount",
+					"identifier": "EnemyType",
+					"__type": "Array<LocalEnum.EnemyType>",
+					"uid": 56,
+					"type": { "id": "F_Enum", "params": [54] },
+					"isArray": true,
+					"canBeNull": false,
+					"arrayMinLength": 1,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "ValueOnly",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": null,
+					"textLanguageMode": null
+				},
+				{
+					"identifier": "EnemyCount",
 					"__type": "Int",
-					"uid": 46,
+					"uid": 57,
 					"type": "F_Int",
 					"isArray": false,
 					"canBeNull": false,
 					"arrayMinLength": null,
 					"arrayMaxLength": null,
 					"editorDisplayMode": "NameAndValue",
-					"editorDisplayPos": "Center",
+					"editorDisplayPos": "Beneath",
 					"editorAlwaysShow": true,
 					"editorCutLongValues": true,
 					"min": null,
@@ -845,6 +865,26 @@
 				"opaqueTiles": "1111111111111110111111111110111110110110111000001111111111100000110000111111111111111011100111111111101110000000000000111000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001110000000000000",
 				"averageColors": "f987f887f887f887f887f887fa98f776f887f777f776f998f988f998f8870000f776f776f776f776f887f776f555f555f555f666f5550000f555f555f555f555f7764ed0f776f8874ed0f887f5550000f555f666f66600000000000000000000f776f776f776f776f887f776f555f555f555f666f66667646764675466533543f666f5660000000000000000fa23fa23fa23f875f865f776f775f775f765f776f665f764f764f764f7649667fa23fa23fa2300000000f775f775f765f765f776f666f667f666f776f6660000f955f944f9330000000000000000000000000000787600000000000000000000f944f944f93300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f975f874f8640000000000000000000000000000000000000000000000000000"
 			}
+		},
+		{
+			"__cWid": 16,
+			"__cHei": 16,
+			"identifier": "Entities",
+			"uid": 53,
+			"relPath": "entities.png",
+			"pxWid": 256,
+			"pxHei": 256,
+			"tileGridSize": 16,
+			"spacing": 0,
+			"padding": 0,
+			"tagsSourceEnumUid": null,
+			"enumTags": [],
+			"customData": [],
+			"savedSelections": [],
+			"cachedPixelData": {
+				"opaqueTiles": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+				"averageColors": "8b989b989b989b989b989b989b989b9800000000000000000000000000000000b353b363b363b353b353b353b353b35300000000000000000000000000000000b983b983b983b983b983b983b983b9834eb04eb04eb04eb04eb04eb04eb04eb0b566b566b666b566b566b566b666b566000000000000000000000000000000005a981ea028741ba61875298639865a96387417520000000000000000000000003845345546555655000000000000000000000000000000007732674279777977744424443444244400000000000000000000000000000000491238122713171314448444944484440000000000000000c65396537653565336535998599859980000000000000000000000008b980000f764000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004a86000033581444265500008667877777770000000000000000000000000000576613794444ab98cb98000000000000000000000000000000000000000000002c22000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+			}
 		}
 	], "enums": [
 		{ "identifier": "TileType", "uid": 5, "values": [
@@ -853,16 +893,21 @@
 			{ "id": "Ground", "tileId": null, "color": 9868950, "__tileSrcRect": null }
 		], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null },
 		{ "identifier": "WeaponTypes", "uid": 28, "values": [
-			{ "id": "Pistol", "tileId": null, "color": 15653123, "__tileSrcRect": null },
-			{ "id": "Shotgun", "tileId": null, "color": 6777708, "__tileSrcRect": null },
-			{ "id": "AK47", "tileId": null, "color": 4726026, "__tileSrcRect": null }
-		], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null },
+			{ "id": "Pistol", "tileId": 81, "color": 4935508, "__tileSrcRect": [16,80,16,16] },
+			{ "id": "Shotgun", "tileId": 82, "color": 6577235, "__tileSrcRect": [32,80,16,16] },
+			{ "id": "AK47", "tileId": 83, "color": 6576462, "__tileSrcRect": [48,80,16,16] }
+		], "iconTilesetUid": 53, "externalRelPath": null, "externalFileChecksum": null },
 		{ "identifier": "Direction", "uid": 43, "values": [
 			{ "id": "Up", "tileId": null, "color": 0, "__tileSrcRect": null },
 			{ "id": "Down", "tileId": null, "color": 0, "__tileSrcRect": null },
 			{ "id": "Left", "tileId": null, "color": 0, "__tileSrcRect": null },
 			{ "id": "Right", "tileId": null, "color": 0, "__tileSrcRect": null }
-		], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null }
+		], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null },
+		{ "identifier": "EnemyType", "uid": 54, "values": [
+			{ "id": "NormalZombie", "tileId": 16, "color": 3562795, "__tileSrcRect": [0,16,16,16] },
+			{ "id": "FireZombie", "tileId": 32, "color": 10587694, "__tileSrcRect": [0,32,16,16] },
+			{ "id": "ArmoredZombie", "tileId": 48, "color": 6121569, "__tileSrcRect": [0,48,16,16] }
+		], "iconTilesetUid": 53, "externalRelPath": null, "externalFileChecksum": null }
 	], "externalEnums": [], "levelFields": [] },
 	"levels": [
 		{
@@ -938,7 +983,20 @@
 										"params": ["Up"]
 									}]
 								},
-								{ "__identifier": "SpawnCount", "__value": 5, "__type": "Int", "defUid": 46, "realEditorValues": [] }
+								{
+									"__identifier": "EnemyType",
+									"__value": [ "NormalZombie", "ArmoredZombie" ],
+									"__type": "Array<LocalEnum.EnemyType>",
+									"defUid": 56,
+									"realEditorValues": [ {
+										"id": "V_String",
+										"params": ["NormalZombie"]
+									}, {
+										"id": "V_String",
+										"params": ["ArmoredZombie"]
+									} ]
+								},
+								{ "__identifier": "EnemyCount", "__value": 5, "__type": "Int", "defUid": 57, "realEditorValues": [] }
 							]
 						},
 						{
@@ -961,7 +1019,17 @@
 										"params": ["Down"]
 									}]
 								},
-								{ "__identifier": "SpawnCount", "__value": 5, "__type": "Int", "defUid": 46, "realEditorValues": [] }
+								{
+									"__identifier": "EnemyType",
+									"__value": ["NormalZombie"],
+									"__type": "Array<LocalEnum.EnemyType>",
+									"defUid": 56,
+									"realEditorValues": [{
+										"id": "V_String",
+										"params": ["NormalZombie"]
+									}]
+								},
+								{ "__identifier": "EnemyCount", "__value": 5, "__type": "Int", "defUid": 57, "realEditorValues": [] }
 							]
 						},
 						{
@@ -984,7 +1052,23 @@
 										"params": ["Left"]
 									}]
 								},
-								{ "__identifier": "SpawnCount", "__value": 5, "__type": "Int", "defUid": 46, "realEditorValues": [] }
+								{
+									"__identifier": "EnemyType",
+									"__value": [ "FireZombie", "NormalZombie", "NormalZombie" ],
+									"__type": "Array<LocalEnum.EnemyType>",
+									"defUid": 56,
+									"realEditorValues": [ {
+										"id": "V_String",
+										"params": ["FireZombie"]
+									}, {
+										"id": "V_String",
+										"params": ["NormalZombie"]
+									}, {
+										"id": "V_String",
+										"params": ["NormalZombie"]
+									} ]
+								},
+								{ "__identifier": "EnemyCount", "__value": 5, "__type": "Int", "defUid": 57, "realEditorValues": [] }
 							]
 						},
 						{
@@ -1277,6 +1361,21 @@
 									"params": ["AK47"]
 								}]
 							}]
+						},
+						{
+							"__identifier": "Enemy_Spawn",
+							"__grid": [18,11],
+							"__pivot": [0.5,0.5],
+							"__tile": { "tilesetUid": 1, "srcRect": [80,80,16,16] },
+							"width": 16,
+							"height": 16,
+							"defUid": 35,
+							"px": [296,184],
+							"fieldInstances": [
+								{ "__identifier": "Direction", "__value": null, "__type": "LocalEnum.Direction", "defUid": 44, "realEditorValues": [] },
+								{ "__identifier": "EnemyType", "__value": [], "__type": "Array<LocalEnum.EnemyType>", "defUid": 56, "realEditorValues": [] },
+								{ "__identifier": "EnemyCount", "__value": 5, "__type": "Int", "defUid": 57, "realEditorValues": [] }
+							]
 						}
 					]
 				},
