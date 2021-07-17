@@ -31,6 +31,7 @@ class PlayState extends FlxState
 	var enemies:FlxTypedGroup<Zombie>;
 	var hud:HUD;
 	var uiCamera:FlxCamera;
+	var fogOfWar:FlxTilemap;
 
 	override public function create()
 	{
@@ -111,6 +112,10 @@ class PlayState extends FlxState
 			player.x = l_player.cx * gridWidth;
 			player.y = l_player.cy * gridHeight;
 		}
+
+		fogOfWar = new FlxTilemap();
+		fogOfWar.loadMapFromArray
+		add(fogOfWar);
 	}
 
 	override public function update(elapsed:Float)
