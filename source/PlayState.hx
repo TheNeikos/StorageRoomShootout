@@ -1,7 +1,9 @@
 package;
 
 import entities.Crate;
+import entities.DamageArea;
 import entities.EnemySpawner;
+import entities.WeaponDrop;
 import entities.Zombie;
 import flixel.FlxCamera.FlxCameraFollowStyle;
 import flixel.FlxG;
@@ -12,29 +14,40 @@ import flixel.group.FlxSpriteGroup;
 import flixel.tile.FlxTilemap;
 import levels.LevelHelper;
 import weapons.Bullet;
+import weapons.Crowbar;
 
 class PlayState extends FlxState
 {
 	var player:Player;
 	var levels:LevelProject;
 	var mapCollision:FlxTilemap;
-	var obstacleCollision:FlxTypedGroup<Crate>;
+	var crateCollision:FlxTypedGroup<Crate>;
 	var enemySpawners:FlxTypedGroup<EnemySpawner>;
 	var enemies:FlxTypedGroup<Zombie>;
+	var hud:HUD;
 
 	override public function create()
 	{
 		super.create();
+
+		// FlxG.debugger.drawDebug = true;
+
 		player = new Player(20, 20);
+		player.addWeapon(new Crowbar());
 		loadMap();
 
 		add(Bullet.BULLETS);
 		add(Bullet.BULLET_SPARKLES);
 
-		add(player);
+		add(DamageArea.DAMAGE_AREAS);
 
-		FlxG.camera.follow(player, FlxCameraFollowStyle.TOPDOWN_TIGHT);
-		FlxG.camera.zoom = 2;
+		add(WeaponDrop.WEAPON_DROPS);
+
+		add(player);
+		hud = new HUD();
+		add(hud);
+
+		FlxG.camera.follow(player, FlxCameraFollowStyle.TOPDOWN_TIGHT, 1);
 	}
 
 	function loadMap()
@@ -55,17 +68,16 @@ class PlayState extends FlxState
 		mapCollision = LevelHelper.createColliderFromIntGrid(current_level.l_Background_Data, 1);
 		add(mapCollision);
 
-		obstacleCollision = new FlxTypedGroup();
-		add(obstacleCollision);
+		crateCollision = new FlxTypedGroup();
+		add(crateCollision);
 
 		var gridWidth = 16;
 		var gridHeight = 16;
 
 		for (crate in current_level.l_Entities.all_Crate)
 		{
-			trace("Crate", crate.cx, crate.cy, gridWidth, gridHeight);
-			var crateEntity = new Crate(crate.cx * gridWidth, crate.cy * gridHeight);
-			obstacleCollision.add(crateEntity);
+			var crateEntity = new Crate(crate.cx * gridWidth, crate.cy * gridHeight, crate.f_WeaponDrops);
+			crateCollision.add(crateEntity);
 		}
 
 		enemies = new FlxTypedGroup();
@@ -96,25 +108,32 @@ class PlayState extends FlxState
 		FlxG.collide(mapCollision, player);
 
 		// Player collides with obstacle
-		FlxG.collide(obstacleCollision, player);
+		FlxG.collide(crateCollision, player);
 
 		// Obstacles collide with map
-		FlxG.collide(mapCollision, obstacleCollision);
+		FlxG.collide(mapCollision, crateCollision);
 
 		// Enemies collide with map
 		FlxG.collide(mapCollision, enemies);
-		FlxG.collide(obstacleCollision, enemies);
+		FlxG.collide(crateCollision, enemies);
 		FlxG.collide(enemies, enemies);
 
 		// Bullets collide with map
 		FlxG.collide(Bullet.BULLETS, mapCollision, bulletHit);
-		FlxG.collide(Bullet.BULLETS, obstacleCollision, bulletHit);
+
+		// Bullets hits crates
+		FlxG.collide(Bullet.BULLETS, crateCollision, bulletHitObstacle);
 
 		// Bullets hit enemies
 		FlxG.collide(Bullet.BULLETS, enemies, bulletHitEnemy);
 
 		FlxG.collide(Bullet.BULLET_SPARKLES, mapCollision);
-		FlxG.collide(Bullet.BULLET_SPARKLES, obstacleCollision);
+		FlxG.collide(Bullet.BULLET_SPARKLES, crateCollision);
+
+		FlxG.overlap(DamageArea.DAMAGE_AREAS, enemies, enemiesHitDamageArea);
+		FlxG.overlap(DamageArea.DAMAGE_AREAS, crateCollision, crateHitDamageArea);
+
+		FlxG.overlap(player, WeaponDrop.WEAPON_DROPS, playerPickWeaponDrop);
 	}
 
 	function bulletHit(bullet:Bullet, map:FlxObject)
@@ -125,6 +144,12 @@ class PlayState extends FlxState
 	function bulletHitEnemy(bullet:Bullet, enemy:Zombie)
 	{
 		enemy.hurt(bullet.get_damage());
+		bullet.kill();
+	}
+
+	function bulletHitObstacle(bullet:Bullet, crate:Crate)
+	{
+		crate.hurt(bullet.get_damage());
 		bullet.kill();
 	}
 
@@ -139,5 +164,21 @@ class PlayState extends FlxState
 		{
 			enemy.seesPlayer = false;
 		}
+	}
+
+	function enemiesHitDamageArea(area:DamageArea, enemy:Zombie)
+	{
+		area.doDamageTo(enemy);
+	}
+
+	function crateHitDamageArea(area:DamageArea, crate:Crate)
+	{
+		area.doDamageTo(crate);
+	}
+
+	function playerPickWeaponDrop(player:Player, weapon_drop:WeaponDrop)
+	{
+		player.addWeapon(weapon_drop.weapon);
+		weapon_drop.kill();
 	}
 }

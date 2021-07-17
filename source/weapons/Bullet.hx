@@ -44,13 +44,12 @@ class Bullet extends FlxSprite
 
 		loadGraphic(AssetPaths.entities__png, true, 16, 16);
 		// makeGraphic(4, 4, FlxColor.YELLOW);
-		animation.add("idle", [4 * 16 + 2 - 1], 1, true);
+		frame = frames.getByIndex(4 * 16 + 1);
 		offset = new FlxPoint(5, 5);
 		height = 3;
 		width = 3;
 
 		solid = true;
-		animation.play("idle");
 	}
 
 	override function kill()

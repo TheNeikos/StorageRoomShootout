@@ -2,15 +2,20 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
-import flixel.util.FlxColor;
 import lime.math.Vector2;
-import weapons.Bullet;
+import weapons.Weapon;
+import weapons.WeaponInventory;
 
 class Player extends FlxSprite
 {
 	static inline var SPEED:Float = 200;
+
+	var weapons:WeaponInventory = new WeaponInventory();
+
+	var activeWeapon(default, set):Weapon;
+
+	public var onActiveWeaponChange:Weapon->Void;
 
 	public function new(x:Float = 0, y:Float = 0)
 	{
@@ -19,16 +24,15 @@ class Player extends FlxSprite
 		drag.x = drag.y = 2000;
 		solid = true;
 
-		animation.add("walk", [0], 6, true);
-		animation.play("walk");
-
-		origin.set(8.5, 10.5);
+		animation.add("walk", [for (i in 0...8) i], 6, true);
 	}
 
 	override function update(elapsed:Float)
 	{
 		updateMovement();
+		activeWeapon.update(elapsed);
 		shoot();
+		switchWeapon();
 		super.update(elapsed);
 	}
 
@@ -70,6 +74,11 @@ class Player extends FlxSprite
 		if (direction.length > 0)
 		{
 			velocity.set(direction.x, direction.y);
+			animation.play("walk");
+		}
+		else
+		{
+			animation.stop();
 		}
 
 		var mousePosition = FlxG.mouse.getWorldPosition();
@@ -81,11 +90,39 @@ class Player extends FlxSprite
 
 	function shoot()
 	{
-		if (FlxG.mouse.justPressed)
+		if (FlxG.mouse.pressed)
 		{
-			var bullet_pos = getMidpoint().add(0, -10).rotate(getMidpoint(), angle);
-
-			Bullet.createNew(bullet_pos.x, bullet_pos.y, 700, angle, 10);
+			if (activeWeapon != null)
+			{
+				activeWeapon.shoot(getMidpoint(), angle);
+			}
 		}
+	}
+
+	function switchWeapon()
+	{
+		if (FlxG.mouse.wheel != 0)
+		{
+			if (FlxG.mouse.wheel > 0)
+			{
+				activeWeapon = weapons.nextWeapon();
+			}
+			if (FlxG.mouse.wheel < 0)
+			{
+				activeWeapon = weapons.prevWeapon();
+			}
+		}
+	}
+
+	public function addWeapon(weapon:Weapon)
+	{
+		activeWeapon = weapons.addWeapon(weapon);
+	}
+
+	function set_activeWeapon(value:Weapon):Weapon
+	{
+		if (onActiveWeaponChange != null)
+			onActiveWeaponChange(value);
+		return activeWeapon = value;
 	}
 }

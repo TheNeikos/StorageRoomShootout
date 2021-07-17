@@ -5,7 +5,6 @@ import flixel.FlxSprite;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.math.FlxVelocity;
-import js.lib.Math;
 
 class Zombie extends FlxSprite
 {
@@ -17,6 +16,7 @@ class Zombie extends FlxSprite
 	public var playerPosition:FlxPoint;
 
 	var speed:Float;
+	var stunTimer:Float;
 
 	public function new(x:Float, y:Float)
 	{
@@ -91,6 +91,22 @@ class Zombie extends FlxSprite
 		else
 		{
 			FlxVelocity.moveTowardsPoint(this, playerPosition, speed);
+		}
+	}
+
+	public function stun(time:Float)
+	{
+		brain.activeState = stunned;
+		stunTimer = time;
+	}
+
+	function stunned(elapsed:Float)
+	{
+		stunTimer -= elapsed;
+
+		if (stunTimer <= 0)
+		{
+			brain.activeState = idle;
 		}
 	}
 }
