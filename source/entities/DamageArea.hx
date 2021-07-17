@@ -3,6 +3,7 @@ package entities;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxPoint;
+import flixel.util.FlxSignal.FlxTypedSignal;
 
 class DamageArea extends FlxSprite
 {
@@ -14,7 +15,7 @@ class DamageArea extends FlxSprite
 	var seenEnemies:Map<FlxSprite, Float> = new Map();
 	var damageCooldown:Float;
 
-	public var onDamage:(enemy:FlxSprite) -> Void;
+	public var onDamage:FlxTypedSignal<FlxSprite->Void> = new FlxTypedSignal<FlxSprite->Void>();
 
 	public static function createNew(lifetime:Float, dmg:Float, cooldown:Float, shape:FlxSprite):DamageArea
 	{
@@ -29,7 +30,7 @@ class DamageArea extends FlxSprite
 		area.setShape(shape);
 		area.damageCooldown = cooldown;
 		area.seenEnemies = new Map();
-		area.onDamage = null;
+		area.onDamage.removeAll();
 
 		return area;
 	}
@@ -87,10 +88,7 @@ class DamageArea extends FlxSprite
 			enemy.hurt(damage);
 			seenEnemies.set(enemy, 0);
 
-			if (onDamage != null)
-			{
-				onDamage(enemy);
-			}
+			onDamage.dispatch(enemy);
 		}
 	}
 }

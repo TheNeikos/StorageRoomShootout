@@ -10,11 +10,8 @@ abstract class Weapon
 	var shotCooldown:Float = 1;
 	var damage:Float = 5;
 	var speed:Float = 250;
-	var count:Float = 1;
-	var pattern:Int->Int->Float->Float->Float->FlxPoint = function(count, i, x, y, angle)
-	{
-		return new FlxPoint(x, y);
-	};
+	var count:Int = 1;
+	var knockback:Float = 50;
 
 	public var icon(get, null):FlxSprite;
 
@@ -46,7 +43,15 @@ abstract class Weapon
 
 	function doShoot(origin:FlxPoint, angle:Float)
 	{
-		Bullet.createNew(origin.x, origin.y, speed, angle, damage);
+		for (i in 0...count)
+		{
+			createBullet(origin, angle, i);
+		}
+	}
+
+	function createBullet(origin:FlxPoint, angle:Float, count:Int):Bullet
+	{
+		return Bullet.createNew(origin.x, origin.y, speed, angle, damage);
 	}
 
 	public function getCategory():WeaponCategory

@@ -1133,7 +1133,16 @@
 							"height": 16,
 							"defUid": 25,
 							"px": [200,472],
-							"fieldInstances": [{ "__identifier": "WeaponDrops", "__value": [], "__type": "Array<LocalEnum.WeaponTypes>", "defUid": 31, "realEditorValues": [] }]
+							"fieldInstances": [{
+								"__identifier": "WeaponDrops",
+								"__value": ["Shotgun"],
+								"__type": "Array<LocalEnum.WeaponTypes>",
+								"defUid": 31,
+								"realEditorValues": [{
+									"id": "V_String",
+									"params": ["Shotgun"]
+								}]
+							}]
 						},
 						{
 							"__identifier": "Crate",

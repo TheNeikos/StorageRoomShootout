@@ -90,6 +90,7 @@ enum WeaponCategory
 {
 	Melee;
 	Pistols;
+	Heavy;
 }
 
 function nextCategory(cat:WeaponCategory):WeaponCategory
@@ -97,7 +98,8 @@ function nextCategory(cat:WeaponCategory):WeaponCategory
 	return switch (cat)
 	{
 		case Melee: Pistols;
-		case Pistols: Melee;
+		case Pistols: Heavy;
+		case Heavy: Melee;
 	};
 }
 
@@ -105,7 +107,8 @@ function prevCategory(cat:WeaponCategory):WeaponCategory
 {
 	return switch (cat)
 	{
-		case Melee: Pistols;
+		case Melee: Heavy;
 		case Pistols: Melee;
+		case Heavy: Pistols;
 	};
 }

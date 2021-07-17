@@ -37,7 +37,7 @@ class Crowbar extends Weapon
 		// shape.drawPolygon(vertices, FlxColor.TRANSPARENT);
 
 		var damageArea = DamageArea.createNew(0.03, damage, 1, shape);
-		damageArea.onDamage = function(enemy:FlxSprite)
+		damageArea.onDamage.add((enemy) ->
 		{
 			if (enemy is Zombie)
 			{
@@ -45,6 +45,6 @@ class Crowbar extends Weapon
 
 				cast(enemy, Zombie).stun(0.5);
 			}
-		};
+		});
 	}
 }

@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.math.FlxPoint;
+import flixel.util.FlxSignal.FlxTypedSignal;
 import lime.math.Vector2;
 import weapons.Weapon;
 import weapons.WeaponInventory;
@@ -15,7 +16,7 @@ class Player extends FlxSprite
 
 	var activeWeapon(default, set):Weapon;
 
-	public var onActiveWeaponChange:Weapon->Void;
+	public var onActiveWeaponChange:FlxTypedSignal<Weapon->Void> = new FlxTypedSignal<Weapon->Void>();
 
 	public function new(x:Float = 0, y:Float = 0)
 	{
@@ -121,8 +122,7 @@ class Player extends FlxSprite
 
 	function set_activeWeapon(value:Weapon):Weapon
 	{
-		if (onActiveWeaponChange != null)
-			onActiveWeaponChange(value);
+		onActiveWeaponChange.dispatch(value);
 		return activeWeapon = value;
 	}
 }

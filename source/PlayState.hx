@@ -6,15 +6,20 @@ import entities.EnemySpawner;
 import entities.WeaponDrop;
 import entities.Zombie;
 import flixel.FlxCamera.FlxCameraFollowStyle;
+import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxState;
 import flixel.group.FlxGroup;
 import flixel.group.FlxSpriteGroup;
 import flixel.tile.FlxTilemap;
+import flixel.util.FlxColor;
+import js.html.AutoKeyword;
 import levels.LevelHelper;
 import weapons.Bullet;
 import weapons.Crowbar;
+import weapons.Pistol;
+import weapons.Weapon;
 
 class PlayState extends FlxState
 {
@@ -25,6 +30,7 @@ class PlayState extends FlxState
 	var enemySpawners:FlxTypedGroup<EnemySpawner>;
 	var enemies:FlxTypedGroup<Zombie>;
 	var hud:HUD;
+	var uiCamera:FlxCamera;
 
 	override public function create()
 	{
@@ -33,7 +39,6 @@ class PlayState extends FlxState
 		// FlxG.debugger.drawDebug = true;
 
 		player = new Player(20, 20);
-		player.addWeapon(new Crowbar());
 		loadMap();
 
 		add(Bullet.BULLETS);
@@ -44,10 +49,19 @@ class PlayState extends FlxState
 		add(WeaponDrop.WEAPON_DROPS);
 
 		add(player);
-		hud = new HUD();
+
+		uiCamera = new FlxCamera(Std.int(FlxG.camera.x), Std.int(FlxG.camera.x), FlxG.camera.width, FlxG.camera.height, 0);
+		uiCamera.bgColor = FlxColor.TRANSPARENT;
+		FlxG.cameras.add(uiCamera, false);
+		hud = new HUD(uiCamera);
 		add(hud);
 
+		player.onActiveWeaponChange.add(weapon -> hud.updateActiveWeapon(weapon));
+
+		player.addWeapon(new Crowbar());
+
 		FlxG.camera.follow(player, FlxCameraFollowStyle.TOPDOWN_TIGHT, 1);
+		FlxG.camera.zoom = 5;
 	}
 
 	function loadMap()
@@ -122,10 +136,10 @@ class PlayState extends FlxState
 		FlxG.collide(Bullet.BULLETS, mapCollision, bulletHit);
 
 		// Bullets hits crates
-		FlxG.collide(Bullet.BULLETS, crateCollision, bulletHitObstacle);
+		FlxG.overlap(Bullet.BULLETS, crateCollision, bulletHitObstacle);
 
 		// Bullets hit enemies
-		FlxG.collide(Bullet.BULLETS, enemies, bulletHitEnemy);
+		FlxG.overlap(Bullet.BULLETS, enemies, bulletHitEnemy);
 
 		FlxG.collide(Bullet.BULLET_SPARKLES, mapCollision);
 		FlxG.collide(Bullet.BULLET_SPARKLES, crateCollision);
@@ -143,7 +157,7 @@ class PlayState extends FlxState
 
 	function bulletHitEnemy(bullet:Bullet, enemy:Zombie)
 	{
-		enemy.hurt(bullet.get_damage());
+		bullet.dealDamageTo(enemy);
 		bullet.kill();
 	}
 

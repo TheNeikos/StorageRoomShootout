@@ -10,8 +10,8 @@ class Pistol extends Weapon
 		var icon = new FlxSprite().loadGraphic(AssetPaths.entities__png, true, 16, 16);
 		icon.frame = icon.frames.getByIndex(5 * 16 + 1);
 		super(icon, Pistols);
-		damage = 10;
-		speed = 300;
-		shotCooldown = 0.6;
+		damage = 7;
+		speed = 500;
+		shotCooldown = 0.3;
 	}
 }

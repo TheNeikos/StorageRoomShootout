@@ -3,6 +3,7 @@ package entities;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import weapons.Pistol;
+import weapons.Shotgun;
 
 class Crate extends FlxSprite
 {
@@ -35,6 +36,9 @@ class Crate extends FlxSprite
 						WeaponDrop.createNew(x, y, new Pistol());
 					};
 				case Shotgun:
+					{
+						WeaponDrop.createNew(x, y, new Shotgun());
+					};
 			}
 		}
 	}
