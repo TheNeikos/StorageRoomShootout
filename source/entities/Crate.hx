@@ -13,9 +13,8 @@ class Crate extends FlxSprite
 	public function new(x:Float, y:Float, drops:Array<Enum_WeaponTypes>)
 	{
 		super(x, y);
-		loadGraphic(AssetPaths.tiles__png, true, 16, 16);
-		animation.add("idle", [5 * 16 + 2 - 1], 1, true);
-		animation.add("idle", [5 * 16 + 2 - 1], 1, true);
+		loadGraphic(AssetPaths.entities__png, true, 16, 16);
+		frame = frames.getByIndex(11 * 16);
 		solid = true;
 		immovable = true;
 		animation.play("idle");

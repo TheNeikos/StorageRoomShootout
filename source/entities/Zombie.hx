@@ -40,7 +40,10 @@ class Zombie extends FlxSprite
 
 	override function update(elapsed:Float)
 	{
-		angle = Math.atan2(velocity.y, velocity.x) * 180 / Math.PI + 90;
+		if (stunTimer <= 0)
+		{
+			angle = Math.atan2(velocity.y, velocity.x) * 180 / Math.PI + 90;
+		}
 
 		brain.update(elapsed);
 		super.update(elapsed);

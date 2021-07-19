@@ -1,25 +1,24 @@
 package;
 
+import dn.Bresenham;
 import entities.Crate;
 import entities.DamageArea;
 import entities.EnemySpawner;
 import entities.WeaponDrop;
 import entities.Zombie;
-import flixel.FlxCamera.FlxCameraFollowStyle;
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxState;
 import flixel.group.FlxGroup;
 import flixel.group.FlxSpriteGroup;
+import flixel.math.FlxMath;
+import flixel.math.FlxPoint;
 import flixel.tile.FlxTilemap;
 import flixel.util.FlxColor;
-import js.html.AutoKeyword;
 import levels.LevelHelper;
 import weapons.Bullet;
 import weapons.Crowbar;
-import weapons.Pistol;
-import weapons.Weapon;
 
 class PlayState extends FlxState
 {
@@ -32,6 +31,7 @@ class PlayState extends FlxState
 	var hud:HUD;
 	var uiCamera:FlxCamera;
 	var fogOfWar:FlxTilemap;
+	var current_level:LevelProject_Level;
 
 	override public function create()
 	{
@@ -51,6 +51,8 @@ class PlayState extends FlxState
 
 		add(player);
 
+		add(fogOfWar);
+
 		uiCamera = new FlxCamera(Std.int(FlxG.camera.x), Std.int(FlxG.camera.x), FlxG.camera.width, FlxG.camera.height, 0);
 		uiCamera.bgColor = FlxColor.TRANSPARENT;
 		FlxG.cameras.add(uiCamera, false);
@@ -69,7 +71,7 @@ class PlayState extends FlxState
 	{
 		levels = new LevelProject();
 		var spriteGroup = new FlxSpriteGroup();
-		var current_level = levels.all_levels.Level_0;
+		current_level = levels.all_levels.Level_0;
 
 		current_level.l_Background_Data.render(spriteGroup);
 		current_level.l_Details.render(spriteGroup);
@@ -103,7 +105,7 @@ class PlayState extends FlxState
 		for (enemySpawn in current_level.l_Entities.all_Enemy_Spawn)
 		{
 			var spawnerEntity = new EnemySpawner(enemySpawn.cx * gridWidth, enemySpawn.cy * gridHeight, enemySpawn.f_Direction, enemies,
-				enemySpawn.f_SpawnCount);
+				enemySpawn.f_EnemyCount);
 			enemySpawners.add(spawnerEntity);
 		}
 
@@ -114,14 +116,19 @@ class PlayState extends FlxState
 		}
 
 		fogOfWar = new FlxTilemap();
-		fogOfWar.loadMapFromArray
-		add(fogOfWar);
+		fogOfWar.setCustomTileMappings([11 * 16, 11 * 16 + 1], null, [[11 * 16], [11 * 16 + 1, 11 * 16 + 2]]);
+		fogOfWar.loadMapFrom2DArray([
+			for (_ in 0...current_level.l_Background_Data.cHei) [
+				for (_ in 0...current_level.l_Background_Data.cWid)
+					0
+			]
+
+		], AssetPaths.tiles__png, 16, 16);
 	}
 
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
-		enemies.forEachAlive(checkEnemyVision);
 
 		// Player collides with the map
 		FlxG.collide(mapCollision, player);
@@ -153,6 +160,9 @@ class PlayState extends FlxState
 		FlxG.overlap(DamageArea.DAMAGE_AREAS, crateCollision, crateHitDamageArea);
 
 		FlxG.overlap(player, WeaponDrop.WEAPON_DROPS, playerPickWeaponDrop);
+
+		enemies.forEachAlive(checkEnemyVision);
+		updateView();
 	}
 
 	function bulletHit(bullet:Bullet, map:FlxObject)
@@ -199,5 +209,32 @@ class PlayState extends FlxState
 	{
 		player.addWeapon(weapon_drop.weapon);
 		weapon_drop.kill();
+	}
+
+	function updateView()
+	{
+		var plyMidpoint = player.getMidpoint();
+
+		Bresenham.iterateDisc(Std.int(plyMidpoint.x / 16), Std.int(plyMidpoint.y / 16), 9, (x, y) ->
+		{
+			fogOfWar.setTile(x, y, 11 * 16, true);
+		});
+
+		Bresenham.iterateDisc(Std.int(plyMidpoint.x / 16), Std.int(plyMidpoint.y / 16), 6, (x, y) ->
+		{
+			var result = FlxPoint.get(x, y);
+			var tiles:Array<Int> = Bresenham.getThinLine(Std.int(plyMidpoint.x / 16), Std.int(plyMidpoint.y / 16), x, y, true)
+				.map((pos) -> mapCollision.getTile(pos.x, pos.y));
+
+			var firstWall = tiles.indexOf(1);
+
+			if (firstWall != -1)
+			{
+				if (firstWall < tiles.length - 2 || tiles.indexOf(0, firstWall) != -1)
+					return;
+			}
+
+			fogOfWar.setTile(Std.int(Math.fround(result.x)), Std.int(Math.fround(result.y)), 15 * 16 + 15, true);
+		});
 	}
 }
