@@ -9,7 +9,7 @@
 		"url": "https://ldtk.io"
 	},
 	"jsonVersion": "0.9.3",
-	"nextUid": 53,
+	"nextUid": 58,
 	"worldLayout": "Free",
 	"worldGridWidth": 256,
 	"worldGridHeight": 256,
@@ -703,8 +703,8 @@
 			"color": "#94D9B3",
 			"renderMode": "Tile",
 			"showName": true,
-			"tilesetId": 1,
-			"tileId": 81,
+			"tilesetId": 53,
+			"tileId": 160,
 			"tileRenderMode": "FitInside",
 			"maxCount": 0,
 			"limitScope": "PerLevel",
@@ -721,7 +721,7 @@
 					"canBeNull": false,
 					"arrayMinLength": null,
 					"arrayMaxLength": null,
-					"editorDisplayMode": "Hidden",
+					"editorDisplayMode": "ValueOnly",
 					"editorDisplayPos": "Above",
 					"editorAlwaysShow": false,
 					"editorCutLongValues": true,
@@ -775,7 +775,7 @@
 			"renderMode": "Tile",
 			"showName": true,
 			"tilesetId": 1,
-			"tileId": 85,
+			"tileId": 91,
 			"tileRenderMode": "FitInside",
 			"maxCount": 0,
 			"limitScope": "PerLevel",
@@ -804,16 +804,36 @@
 					"textLanguageMode": null
 				},
 				{
-					"identifier": "SpawnCount",
+					"identifier": "EnemyType",
+					"__type": "Array<LocalEnum.EnemyType>",
+					"uid": 56,
+					"type": { "id": "F_Enum", "params": [54] },
+					"isArray": true,
+					"canBeNull": false,
+					"arrayMinLength": 1,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "ValueOnly",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": null,
+					"textLanguageMode": null
+				},
+				{
+					"identifier": "EnemyCount",
 					"__type": "Int",
-					"uid": 46,
+					"uid": 57,
 					"type": "F_Int",
 					"isArray": false,
 					"canBeNull": false,
 					"arrayMinLength": null,
 					"arrayMaxLength": null,
 					"editorDisplayMode": "NameAndValue",
-					"editorDisplayPos": "Center",
+					"editorDisplayPos": "Beneath",
 					"editorAlwaysShow": true,
 					"editorCutLongValues": true,
 					"min": null,
@@ -842,8 +862,28 @@
 			"customData": [],
 			"savedSelections": [],
 			"cachedPixelData": {
-				"opaqueTiles": "1111111111111110111111111110111110110110111000001111111111100000110000111111111111111011100111111111101110000000000000111000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001110000000000000",
-				"averageColors": "f987f887f887f887f887f887fa98f776f887f777f776f998f988f998f8870000f776f776f776f776f887f776f555f555f555f666f5550000f555f555f555f555f7764ed0f776f8874ed0f887f5550000f555f666f66600000000000000000000f776f776f776f776f887f776f555f555f555f666f66667646764675466533543f666f5660000000000000000fa23fa23fa23f875f865f776f775f775f765f776f665f764f764f764f7649667fa23fa23fa2300000000f775f775f765f765f776f666f667f666f776f6660000f955f944f9330000000000000000000000000000787600000000000000000000f944f944f93300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f975f874f8640000000000000000000000000000000000000000000000000000"
+				"opaqueTiles": "1111111111111110111111111110111110110110111000001111111111100000111100000111111100000000000111110000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001110000000000000",
+				"averageColors": "f987f887f887f887f887f887fa98f776f887f777f776f998f988f998f8870000f776f776f776f776f887f776f555f555f555f666f5550000f555f555f555f555f7764ed0f776f8874ed0f887f5550000f555f666f66600000000000000000000f776f776f776f776f887f776f555f555f555f666f66667646764675466533543f666f666f566f77696670000000000000000f875f865f776f775f775f765f77679760000000000000000000000000000000000000000f775f775f765f765f776000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f975f874f8640000000000000000000000000000000000000000000000000000"
+			}
+		},
+		{
+			"__cWid": 16,
+			"__cHei": 16,
+			"identifier": "Entities",
+			"uid": 53,
+			"relPath": "entities.png",
+			"pxWid": 256,
+			"pxHei": 256,
+			"tileGridSize": 16,
+			"spacing": 0,
+			"padding": 0,
+			"tagsSourceEnumUid": null,
+			"enumTags": [],
+			"customData": [],
+			"savedSelections": [],
+			"cachedPixelData": {
+				"opaqueTiles": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000110000000000011111000000000001111100000000000111110000000000011110000000000000000000110000000000",
+				"averageColors": "8b989b989b989b989b989b989b989b9887778777877787778777877787778777b353b363b363b353b353b353b353b35300000000000000000000000000000000b982b982b982b982b982b982b982b9824eb04eb04eb04eb04eb04eb04eb04eb0b566b566b666b566b566b566b566b566773266427732674249123812271317137a972ba81a983ca71875298639865a96387417520000000019122a222a121a2238453455465556553ba600000000000000000000000000000000000000000000744424443444244400005a98000000000000000000000000000000000000000014448444944484440000000000000000000000000000144426558b988667000059867766335844440000000000000000000000000000ab98cb980000000000002444344434442444344434442444144414440000000000000000000000000000f764f753f653e653b65396537653565326530000000000000000fa22fa22fa22f764f754f753e653b65396537653565326530000000000000000fa22fa22fa22f764f764f754e753b65396537653565326530000000000000000f945f944f923f764f764f753e653b65396537653565326530000000000000000f944f933f922f566b666000000000000000000000000000000000000000000000000000000000000000000000000f666f6650000000000000000000000000000000000000000"
 			}
 		}
 	], "enums": [
@@ -853,16 +893,21 @@
 			{ "id": "Ground", "tileId": null, "color": 9868950, "__tileSrcRect": null }
 		], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null },
 		{ "identifier": "WeaponTypes", "uid": 28, "values": [
-			{ "id": "Pistol", "tileId": null, "color": 15653123, "__tileSrcRect": null },
-			{ "id": "Shotgun", "tileId": null, "color": 6777708, "__tileSrcRect": null },
-			{ "id": "AK47", "tileId": null, "color": 4726026, "__tileSrcRect": null }
-		], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null },
+			{ "id": "Pistol", "tileId": 81, "color": 4935508, "__tileSrcRect": [16,80,16,16] },
+			{ "id": "Shotgun", "tileId": 82, "color": 6577235, "__tileSrcRect": [32,80,16,16] },
+			{ "id": "AK47", "tileId": 83, "color": 6576462, "__tileSrcRect": [48,80,16,16] }
+		], "iconTilesetUid": 53, "externalRelPath": null, "externalFileChecksum": null },
 		{ "identifier": "Direction", "uid": 43, "values": [
 			{ "id": "Up", "tileId": null, "color": 0, "__tileSrcRect": null },
 			{ "id": "Down", "tileId": null, "color": 0, "__tileSrcRect": null },
 			{ "id": "Left", "tileId": null, "color": 0, "__tileSrcRect": null },
 			{ "id": "Right", "tileId": null, "color": 0, "__tileSrcRect": null }
-		], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null }
+		], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null },
+		{ "identifier": "EnemyType", "uid": 54, "values": [
+			{ "id": "NormalZombie", "tileId": 16, "color": 3562795, "__tileSrcRect": [0,16,16,16] },
+			{ "id": "FireZombie", "tileId": 32, "color": 10587694, "__tileSrcRect": [0,32,16,16] },
+			{ "id": "ArmoredZombie", "tileId": 48, "color": 6121569, "__tileSrcRect": [0,48,16,16] }
+		], "iconTilesetUid": 53, "externalRelPath": null, "externalFileChecksum": null }
 	], "externalEnums": [], "levelFields": [] },
 	"levels": [
 		{
@@ -922,7 +967,7 @@
 							"__identifier": "Enemy_Spawn",
 							"__grid": [13,15],
 							"__pivot": [0.5,0.5],
-							"__tile": { "tilesetUid": 1, "srcRect": [80,80,16,16] },
+							"__tile": { "tilesetUid": 1, "srcRect": [176,80,16,16] },
 							"width": 16,
 							"height": 16,
 							"defUid": 35,
@@ -938,14 +983,27 @@
 										"params": ["Up"]
 									}]
 								},
-								{ "__identifier": "SpawnCount", "__value": 5, "__type": "Int", "defUid": 46, "realEditorValues": [] }
+								{
+									"__identifier": "EnemyType",
+									"__value": [ "NormalZombie", "ArmoredZombie" ],
+									"__type": "Array<LocalEnum.EnemyType>",
+									"defUid": 56,
+									"realEditorValues": [ {
+										"id": "V_String",
+										"params": ["NormalZombie"]
+									}, {
+										"id": "V_String",
+										"params": ["ArmoredZombie"]
+									} ]
+								},
+								{ "__identifier": "EnemyCount", "__value": 5, "__type": "Int", "defUid": 57, "realEditorValues": [] }
 							]
 						},
 						{
 							"__identifier": "Enemy_Spawn",
 							"__grid": [8,0],
 							"__pivot": [0.5,0.5],
-							"__tile": { "tilesetUid": 1, "srcRect": [80,80,16,16] },
+							"__tile": { "tilesetUid": 1, "srcRect": [176,80,16,16] },
 							"width": 16,
 							"height": 16,
 							"defUid": 35,
@@ -961,14 +1019,24 @@
 										"params": ["Down"]
 									}]
 								},
-								{ "__identifier": "SpawnCount", "__value": 5, "__type": "Int", "defUid": 46, "realEditorValues": [] }
+								{
+									"__identifier": "EnemyType",
+									"__value": ["NormalZombie"],
+									"__type": "Array<LocalEnum.EnemyType>",
+									"defUid": 56,
+									"realEditorValues": [{
+										"id": "V_String",
+										"params": ["NormalZombie"]
+									}]
+								},
+								{ "__identifier": "EnemyCount", "__value": 5, "__type": "Int", "defUid": 57, "realEditorValues": [] }
 							]
 						},
 						{
 							"__identifier": "Enemy_Spawn",
 							"__grid": [23,29],
 							"__pivot": [0.5,0.5],
-							"__tile": { "tilesetUid": 1, "srcRect": [80,80,16,16] },
+							"__tile": { "tilesetUid": 1, "srcRect": [176,80,16,16] },
 							"width": 16,
 							"height": 16,
 							"defUid": 35,
@@ -984,14 +1052,30 @@
 										"params": ["Left"]
 									}]
 								},
-								{ "__identifier": "SpawnCount", "__value": 5, "__type": "Int", "defUid": 46, "realEditorValues": [] }
+								{
+									"__identifier": "EnemyType",
+									"__value": [ "FireZombie", "NormalZombie", "NormalZombie" ],
+									"__type": "Array<LocalEnum.EnemyType>",
+									"defUid": 56,
+									"realEditorValues": [ {
+										"id": "V_String",
+										"params": ["FireZombie"]
+									}, {
+										"id": "V_String",
+										"params": ["NormalZombie"]
+									}, {
+										"id": "V_String",
+										"params": ["NormalZombie"]
+									} ]
+								},
+								{ "__identifier": "EnemyCount", "__value": 5, "__type": "Int", "defUid": 57, "realEditorValues": [] }
 							]
 						},
 						{
 							"__identifier": "Crate",
 							"__grid": [1,1],
 							"__pivot": [0.5,0.5],
-							"__tile": { "tilesetUid": 1, "srcRect": [16,80,16,16] },
+							"__tile": { "tilesetUid": 53, "srcRect": [0,160,16,16] },
 							"width": 16,
 							"height": 16,
 							"defUid": 25,
@@ -1002,7 +1086,7 @@
 							"__identifier": "Crate",
 							"__grid": [6,15],
 							"__pivot": [0.5,0.5],
-							"__tile": { "tilesetUid": 1, "srcRect": [16,80,16,16] },
+							"__tile": { "tilesetUid": 53, "srcRect": [0,160,16,16] },
 							"width": 16,
 							"height": 16,
 							"defUid": 25,
@@ -1013,7 +1097,7 @@
 							"__identifier": "Crate",
 							"__grid": [12,19],
 							"__pivot": [0.5,0.5],
-							"__tile": { "tilesetUid": 1, "srcRect": [16,80,16,16] },
+							"__tile": { "tilesetUid": 53, "srcRect": [0,160,16,16] },
 							"width": 16,
 							"height": 16,
 							"defUid": 25,
@@ -1024,7 +1108,7 @@
 							"__identifier": "Crate",
 							"__grid": [8,20],
 							"__pivot": [0.5,0.5],
-							"__tile": { "tilesetUid": 1, "srcRect": [16,80,16,16] },
+							"__tile": { "tilesetUid": 53, "srcRect": [0,160,16,16] },
 							"width": 16,
 							"height": 16,
 							"defUid": 25,
@@ -1035,7 +1119,7 @@
 							"__identifier": "Crate",
 							"__grid": [12,11],
 							"__pivot": [0.5,0.5],
-							"__tile": { "tilesetUid": 1, "srcRect": [16,80,16,16] },
+							"__tile": { "tilesetUid": 53, "srcRect": [0,160,16,16] },
 							"width": 16,
 							"height": 16,
 							"defUid": 25,
@@ -1046,7 +1130,7 @@
 							"__identifier": "Crate",
 							"__grid": [9,12],
 							"__pivot": [0.5,0.5],
-							"__tile": { "tilesetUid": 1, "srcRect": [16,80,16,16] },
+							"__tile": { "tilesetUid": 53, "srcRect": [0,160,16,16] },
 							"width": 16,
 							"height": 16,
 							"defUid": 25,
@@ -1057,7 +1141,7 @@
 							"__identifier": "Crate",
 							"__grid": [11,17],
 							"__pivot": [0.5,0.5],
-							"__tile": { "tilesetUid": 1, "srcRect": [16,80,16,16] },
+							"__tile": { "tilesetUid": 53, "srcRect": [0,160,16,16] },
 							"width": 16,
 							"height": 16,
 							"defUid": 25,
@@ -1068,7 +1152,7 @@
 							"__identifier": "Crate",
 							"__grid": [10,5],
 							"__pivot": [0.5,0.5],
-							"__tile": { "tilesetUid": 1, "srcRect": [16,80,16,16] },
+							"__tile": { "tilesetUid": 53, "srcRect": [0,160,16,16] },
 							"width": 16,
 							"height": 16,
 							"defUid": 25,
@@ -1088,7 +1172,7 @@
 							"__identifier": "Crate",
 							"__grid": [8,3],
 							"__pivot": [0.5,0.5],
-							"__tile": { "tilesetUid": 1, "srcRect": [16,80,16,16] },
+							"__tile": { "tilesetUid": 53, "srcRect": [0,160,16,16] },
 							"width": 16,
 							"height": 16,
 							"defUid": 25,
@@ -1099,7 +1183,7 @@
 							"__identifier": "Crate",
 							"__grid": [2,10],
 							"__pivot": [0.5,0.5],
-							"__tile": { "tilesetUid": 1, "srcRect": [16,80,16,16] },
+							"__tile": { "tilesetUid": 53, "srcRect": [0,160,16,16] },
 							"width": 16,
 							"height": 16,
 							"defUid": 25,
@@ -1110,7 +1194,7 @@
 							"__identifier": "Crate",
 							"__grid": [4,17],
 							"__pivot": [0.5,0.5],
-							"__tile": { "tilesetUid": 1, "srcRect": [16,80,16,16] },
+							"__tile": { "tilesetUid": 53, "srcRect": [0,160,16,16] },
 							"width": 16,
 							"height": 16,
 							"defUid": 25,
@@ -1121,7 +1205,7 @@
 							"__identifier": "Crate",
 							"__grid": [14,28],
 							"__pivot": [0.5,0.5],
-							"__tile": { "tilesetUid": 1, "srcRect": [16,80,16,16] },
+							"__tile": { "tilesetUid": 53, "srcRect": [0,160,16,16] },
 							"width": 16,
 							"height": 16,
 							"defUid": 25,
@@ -1132,7 +1216,7 @@
 							"__identifier": "Crate",
 							"__grid": [12,29],
 							"__pivot": [0.5,0.5],
-							"__tile": { "tilesetUid": 1, "srcRect": [16,80,16,16] },
+							"__tile": { "tilesetUid": 53, "srcRect": [0,160,16,16] },
 							"width": 16,
 							"height": 16,
 							"defUid": 25,
@@ -1152,7 +1236,7 @@
 							"__identifier": "Crate",
 							"__grid": [8,26],
 							"__pivot": [0.5,0.5],
-							"__tile": { "tilesetUid": 1, "srcRect": [16,80,16,16] },
+							"__tile": { "tilesetUid": 53, "srcRect": [0,160,16,16] },
 							"width": 16,
 							"height": 16,
 							"defUid": 25,
@@ -1163,7 +1247,7 @@
 							"__identifier": "Crate",
 							"__grid": [7,26],
 							"__pivot": [0.5,0.5],
-							"__tile": { "tilesetUid": 1, "srcRect": [16,80,16,16] },
+							"__tile": { "tilesetUid": 53, "srcRect": [0,160,16,16] },
 							"width": 16,
 							"height": 16,
 							"defUid": 25,
@@ -1174,7 +1258,7 @@
 							"__identifier": "Crate",
 							"__grid": [6,26],
 							"__pivot": [0.5,0.5],
-							"__tile": { "tilesetUid": 1, "srcRect": [16,80,16,16] },
+							"__tile": { "tilesetUid": 53, "srcRect": [0,160,16,16] },
 							"width": 16,
 							"height": 16,
 							"defUid": 25,
@@ -1185,7 +1269,7 @@
 							"__identifier": "Crate",
 							"__grid": [19,19],
 							"__pivot": [0.5,0.5],
-							"__tile": { "tilesetUid": 1, "srcRect": [16,80,16,16] },
+							"__tile": { "tilesetUid": 53, "srcRect": [0,160,16,16] },
 							"width": 16,
 							"height": 16,
 							"defUid": 25,
@@ -1196,7 +1280,7 @@
 							"__identifier": "Crate",
 							"__grid": [22,18],
 							"__pivot": [0.5,0.5],
-							"__tile": { "tilesetUid": 1, "srcRect": [16,80,16,16] },
+							"__tile": { "tilesetUid": 53, "srcRect": [0,160,16,16] },
 							"width": 16,
 							"height": 16,
 							"defUid": 25,
@@ -1207,7 +1291,7 @@
 							"__identifier": "Crate",
 							"__grid": [25,19],
 							"__pivot": [0.5,0.5],
-							"__tile": { "tilesetUid": 1, "srcRect": [16,80,16,16] },
+							"__tile": { "tilesetUid": 53, "srcRect": [0,160,16,16] },
 							"width": 16,
 							"height": 16,
 							"defUid": 25,
@@ -1218,7 +1302,7 @@
 							"__identifier": "Crate",
 							"__grid": [20,14],
 							"__pivot": [0.5,0.5],
-							"__tile": { "tilesetUid": 1, "srcRect": [16,80,16,16] },
+							"__tile": { "tilesetUid": 53, "srcRect": [0,160,16,16] },
 							"width": 16,
 							"height": 16,
 							"defUid": 25,
@@ -1229,7 +1313,7 @@
 							"__identifier": "Crate",
 							"__grid": [24,11],
 							"__pivot": [0.5,0.5],
-							"__tile": { "tilesetUid": 1, "srcRect": [16,80,16,16] },
+							"__tile": { "tilesetUid": 53, "srcRect": [0,160,16,16] },
 							"width": 16,
 							"height": 16,
 							"defUid": 25,
@@ -1240,7 +1324,7 @@
 							"__identifier": "Crate",
 							"__grid": [21,8],
 							"__pivot": [0.5,0.5],
-							"__tile": { "tilesetUid": 1, "srcRect": [16,80,16,16] },
+							"__tile": { "tilesetUid": 53, "srcRect": [0,160,16,16] },
 							"width": 16,
 							"height": 16,
 							"defUid": 25,
@@ -1251,7 +1335,7 @@
 							"__identifier": "Crate",
 							"__grid": [25,6],
 							"__pivot": [0.5,0.5],
-							"__tile": { "tilesetUid": 1, "srcRect": [16,80,16,16] },
+							"__tile": { "tilesetUid": 53, "srcRect": [0,160,16,16] },
 							"width": 16,
 							"height": 16,
 							"defUid": 25,
@@ -1262,7 +1346,7 @@
 							"__identifier": "Crate",
 							"__grid": [25,16],
 							"__pivot": [0.5,0.5],
-							"__tile": { "tilesetUid": 1, "srcRect": [16,80,16,16] },
+							"__tile": { "tilesetUid": 53, "srcRect": [0,160,16,16] },
 							"width": 16,
 							"height": 16,
 							"defUid": 25,
