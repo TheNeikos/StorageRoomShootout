@@ -1,12 +1,6 @@
 package levels;
 
-import flixel.FlxObject;
-import flixel.FlxSprite;
-import flixel.group.FlxGroup;
-import flixel.group.FlxSpriteGroup;
-import flixel.tile.FlxBaseTilemap.FlxTilemapAutoTiling;
 import flixel.tile.FlxTilemap;
-import ldtk.Layer_AutoLayer.AutoTile;
 import ldtk.Layer_IntGrid;
 
 class LevelHelper
@@ -35,7 +29,7 @@ class LevelHelper
 			data.push(line);
 		}
 
-		tileMap.loadMapFrom2DArray(data, AssetPaths.tiles__png, 16, 16, FlxTilemapAutoTiling.OFF);
+		tileMap.loadMapFrom2DArray(data, AssetPaths.tiles__png, 16, 16);
 		tileMap.visible = false;
 
 		return tileMap;

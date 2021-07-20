@@ -10,7 +10,7 @@ import weapons.WeaponInventory;
 
 class Player extends FlxSprite
 {
-	static inline var SPEED:Float = 200;
+	static inline var SPEED:Float = 150;
 
 	var weapons:WeaponInventory = new WeaponInventory();
 

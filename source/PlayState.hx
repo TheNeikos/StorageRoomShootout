@@ -1,14 +1,17 @@
 package;
 
 import dn.Bresenham;
+import dn.M;
 import entities.Crate;
 import entities.DamageArea;
 import entities.EnemySpawner;
+import entities.Fx;
 import entities.WeaponDrop;
 import entities.Zombie;
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxObject;
+import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxGroup;
 import flixel.group.FlxSpriteGroup;
@@ -25,6 +28,7 @@ class PlayState extends FlxState
 	var player:Player;
 	var levels:LevelProject;
 	var mapCollision:FlxTilemap;
+	var mapRender:FlxTypedSpriteGroup<FlxSprite>;
 	var crateCollision:FlxTypedGroup<Crate>;
 	var enemySpawners:FlxTypedGroup<EnemySpawner>;
 	var enemies:FlxTypedGroup<Zombie>;
@@ -41,6 +45,13 @@ class PlayState extends FlxState
 
 		player = new Player(20, 20);
 		loadMap();
+
+		add(mapRender);
+		add(Fx.FX);
+		add(mapCollision);
+		add(crateCollision);
+		add(enemySpawners);
+		add(enemies);
 
 		add(Bullet.BULLETS);
 		add(Bullet.BULLET_SPARKLES);
@@ -70,23 +81,20 @@ class PlayState extends FlxState
 	function loadMap()
 	{
 		levels = new LevelProject();
-		var spriteGroup = new FlxSpriteGroup();
+		mapRender = new FlxSpriteGroup();
 		current_level = levels.all_levels.Level_0;
 
-		current_level.l_Background_Data.render(spriteGroup);
-		current_level.l_Details.render(spriteGroup);
-		spriteGroup.forEach(function(sprite)
+		current_level.l_Background_Data.render(mapRender);
+		current_level.l_Details.render(mapRender);
+		mapRender.forEach(function(sprite)
 		{
 			sprite.width = 16;
 			sprite.height = 16;
 		});
-		add(spriteGroup);
 
 		mapCollision = LevelHelper.createColliderFromIntGrid(current_level.l_Background_Data, 1);
-		add(mapCollision);
 
 		crateCollision = new FlxTypedGroup();
-		add(crateCollision);
 
 		var gridWidth = 16;
 		var gridHeight = 16;
@@ -99,8 +107,6 @@ class PlayState extends FlxState
 
 		enemies = new FlxTypedGroup();
 		enemySpawners = new FlxTypedGroup();
-		add(enemySpawners);
-		add(enemies);
 
 		for (enemySpawn in current_level.l_Entities.all_Enemy_Spawn)
 		{
@@ -214,13 +220,16 @@ class PlayState extends FlxState
 	function updateView()
 	{
 		var plyMidpoint = player.getMidpoint();
+		var plyTilePos = player.getMidpoint().scale(1 / 16);
 
 		Bresenham.iterateDisc(Std.int(plyMidpoint.x / 16), Std.int(plyMidpoint.y / 16), 9, (x, y) ->
 		{
 			fogOfWar.setTile(x, y, 11 * 16, true);
 		});
 
-		Bresenham.iterateDisc(Std.int(plyMidpoint.x / 16), Std.int(plyMidpoint.y / 16), 6, (x, y) ->
+		var radius = 6;
+
+		Bresenham.iterateDisc(Std.int(plyMidpoint.x / 16), Std.int(plyMidpoint.y / 16), radius, (x, y) ->
 		{
 			var result = FlxPoint.get(x, y);
 			var tiles:Array<Int> = Bresenham.getThinLine(Std.int(plyMidpoint.x / 16), Std.int(plyMidpoint.y / 16), x, y, true)
@@ -235,6 +244,14 @@ class PlayState extends FlxState
 			}
 
 			fogOfWar.setTile(Std.int(Math.fround(result.x)), Std.int(Math.fround(result.y)), 15 * 16 + 15, true);
+		});
+
+		Bresenham.iterateCircle(Std.int(plyTilePos.x), Std.int(plyTilePos.y), radius, (x, y) ->
+		{
+			if (!Bresenham.checkThinLine(Std.int(plyTilePos.x), Std.int(plyTilePos.y), x, y, (x, y) -> mapCollision.getTile(x, y) == 0))
+				return;
+
+			fogOfWar.setTile(x, y, 11 * 16 + 1, true);
 		});
 	}
 }

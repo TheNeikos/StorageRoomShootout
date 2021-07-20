@@ -5,6 +5,7 @@ import flixel.FlxSprite;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.math.FlxVelocity;
+import flixel.system.FlxSound;
 
 class Zombie extends FlxSprite
 {
@@ -17,6 +18,7 @@ class Zombie extends FlxSprite
 
 	var speed:Float;
 	var stunTimer:Float;
+	var zombieDeathSound:FlxSound;
 
 	public function new(x:Float, y:Float)
 	{
@@ -34,8 +36,9 @@ class Zombie extends FlxSprite
 		brain = new FSM(idle);
 		idleTimer = 0;
 		playerPosition = FlxPoint.get();
-		speed = 40;
+		speed = 20;
 		health = 20;
+		zombieDeathSound = FlxG.sound.load(AssetPaths.zombie_death__ogg);
 	}
 
 	override function update(elapsed:Float)
@@ -44,6 +47,8 @@ class Zombie extends FlxSprite
 		{
 			angle = Math.atan2(velocity.y, velocity.x) * 180 / Math.PI + 90;
 		}
+
+		zombieDeathSound.proximity(x, y, FlxG.camera.target, FlxG.width * 0.6);
 
 		brain.update(elapsed);
 		super.update(elapsed);
@@ -111,5 +116,19 @@ class Zombie extends FlxSprite
 		{
 			brain.activeState = idle;
 		}
+	}
+
+	override function hurt(Damage:Float)
+	{
+		super.hurt(Damage);
+		Fx.blood(getMidpoint());
+	}
+
+	override function kill()
+	{
+		super.kill();
+
+		zombieDeathSound.play();
+		Fx.zombieBody(getMidpoint());
 	}
 }
