@@ -128,7 +128,7 @@ class Zombie extends FlxSprite
 	{
 		super.kill();
 
-		zombieDeathSound.play();
+		zombieDeathSound.play(false, 300);
 		Fx.zombieBody(getMidpoint());
 	}
 }
