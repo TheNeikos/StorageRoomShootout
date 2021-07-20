@@ -1,7 +1,6 @@
 package;
 
 import dn.Bresenham;
-import dn.M;
 import entities.Crate;
 import entities.DamageArea;
 import entities.EnemySpawner;
@@ -15,7 +14,6 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxGroup;
 import flixel.group.FlxSpriteGroup;
-import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.tile.FlxTilemap;
 import flixel.util.FlxColor;

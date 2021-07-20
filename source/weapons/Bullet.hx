@@ -4,15 +4,12 @@ import entities.Spark;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.effects.particles.FlxEmitter;
-import flixel.effects.particles.FlxParticle;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxPoint;
 import flixel.math.FlxVector;
 import flixel.util.FlxColor;
 import flixel.util.FlxSignal.FlxTypedSignal;
-import flixel.util.FlxTimer;
 import flixel.util.helpers.FlxBounds;
-import haxe.Timer;
 
 class Bullet extends FlxSprite
 {
